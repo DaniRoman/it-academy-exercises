@@ -8,13 +8,13 @@
 SELECT DISTINCT c.country 
 FROM company AS c 
 INNER JOIN transaction AS t ON c.id = t.company_id
-WHERE t.amount >0;
+WHERE t.declined != 1;
 
 -- Des de quants països es realitzen les compres.
 SELECT COUNT(DISTINCT c.country)  AS `cantidad de paises que realispaïsos es realitzen les compres`
 FROM company AS c 
 INNER JOIN transaction AS t ON c.id = t.company_id
-WHERE t.amount >0;
+WHERE t.declined != 1;
 
 -- Identifica la companyia amb la mitjana més gran de vendes.
 SELECT c.company_name, avg_transactions.avg_amount
@@ -133,9 +133,13 @@ ORDER BY t.amount DESC;
 
 
 -- quantitat de transaccions que realitzen les empreses, si tenen més de 4 transaccions o menys.
-SELECT c.id, c.company_name, COUNT(t.amount) AS cantidad_transacciones
+SELECT c.id, c.company_name, COUNT(t.amount) AS cantidad_transacciones,
+       CASE 
+           WHEN COUNT(t.amount) > 4 THEN 'Més de 4 transaccions'
+           ELSE '4 transaccions o menys'
+       END AS transaccio_categoria
 FROM company c
-JOIN transaction t
+LEFT JOIN transaction t
 ON c.id = t.company_id
-GROUP BY c.id
-HAVING COUNT(t.amount) > 4;
+GROUP BY c.id, c.company_name;
+

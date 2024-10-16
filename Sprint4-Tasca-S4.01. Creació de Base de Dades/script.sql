@@ -3,6 +3,76 @@
 CREATE DATABASE sprint4 CHARACTER SET utf8;
 USE sprint4;
 
+
+---
+-- CREACIÓN DE TABLAS PARA LA BASE DE DATOS 
+CREATE TABLE company (
+    company_id VARCHAR(50),
+    company_name VARCHAR(100),
+    phone INT,
+    email VARCHAR(50),
+    country VARCHAR(50),
+    website VARCHAR(100),
+
+    CONSTRAINT pk_company_id PRIMARY KEY(company_id)
+);
+
+CREATE TABLE credit_card (
+    id VARCHAR(50),
+    user_id INT,
+    iban VARCHAR(100),
+    pan VARCHAR(100),
+    pin CHAR(4),
+    cvv CHAR(3),
+    track1 VARCHAR(100),
+    track2V VARCHAR(100),
+    expiring_date VARCHAR(10)
+
+    CONSTRAINT pk_credit_card_id PRIMARY KEY(id)
+);
+
+CREATE TABLE product(
+    id INT,
+    product_name VARCHAR(100),
+    price DECIMAL(5,2),
+    colour VARCHAR(50),
+    weight DECIMAL(2,1),
+    warehouse_id VARCHAR(10),
+
+    CONSTRAINT pk_product_id PRIMARY KEY(id)
+);
+
+CREATE TABLE transaction(
+    id VARCHAR(100),
+    card_id VARCHAR(20),
+    business_id VARCHAR(50),
+    timestamp TIMESTAMP,
+    amount DECIMAL(5,2),
+    declined SMALLINT,
+    product_ids INT,
+    user_id INT,
+    lat VARCHAR(50),
+    longitude VARCHAR(50),
+
+    CONSTRAINT pk_transaction_id PRIMARY KEY(id)
+);
+
+CREATED TABLE user(
+id INT,
+name VARCHAR(50),
+surname VARCHAR(50),
+phone VARCHAR(50),
+email VARCHAR(50),
+birth_date VARCHAR(100),
+country VARCHAR(50),
+city VARCHAR(50),
+postal_code VARCHAR(20),
+address VARCHAR(100)
+
+CONSTRAINT pk_user_id PRIMARY KEY(id)
+);
+
+
 ---
 -- NIVEL 1 - EJ 1
 SELECT name 
@@ -70,7 +140,7 @@ SELECT SUM(CASE WHEN '1' IN (product_ids) THEN 1 ELSE 0 END) AS product_1_sales,
 	SUM(CASE WHEN '2' IN (product_ids) THEN 1 ELSE 0 END) AS product_2_sales,
     SUM(CASE WHEN '3' IN (product_ids) THEN 1 ELSE 0 END) AS product_3_sales,
     SUM(CASE WHEN '4' IN (product_ids) THEN 1 ELSE 0 END) AS product_4_sales,
-    SUM(CASE WHEN '5' IN (product_ids) THEN 1 ELSE 0 END) AS product_5_sales,
+    SUM(CASE WHEN '5' IN (product_ids) THEN 1 ELSE1212 0 END) AS product_5_sales,
     SUM(CASE WHEN '6' IN (product_ids) THEN 1 ELSE 0 END) AS product_6_sales,
     SUM(CASE WHEN '7' IN (product_ids) THEN 1 ELSE 0 END) AS product_7_sales,
     SUM(CASE WHEN '8' IN (product_ids) THEN 1 ELSE 0 END) AS product_8_sales,

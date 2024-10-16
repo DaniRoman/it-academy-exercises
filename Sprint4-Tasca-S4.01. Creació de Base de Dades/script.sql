@@ -72,6 +72,40 @@ address VARCHAR(100)
 CONSTRAINT pk_user_id PRIMARY KEY(id)
 );
 
+--- CARGAMOS LOS DATOS EN LA BASES DE DATOS A TRAVES DE UNA COMANDA Y UN ARCHIVO CSV
+
+LOAD DATA 
+INFILE '/Users/macbook/Documents/it-academy/scripts/sprint4/companies.csv' 
+INTO TABLE company 
+FIELDS TERMINATED BY ',' 
+ENCLOSED BY '"' 
+LINES TERMINATED 
+BY '\n' 
+IGNORE 1 LINES;
+
+-------------------------------------------
+
+----UNA VEZ TENEMOS LOS DATOS CARGADOS PROCEDEMOS A CREAR LAS CLAVES FORANEAS
+
+-- 'user_id' en 'credit_card', que referencia a la tabla 'user'
+ALTER TABLE credit_card
+ADD CONSTRAINT fk_credit_card_user_id
+FOREIGN KEY (user_id) REFERENCES user(id);
+
+-- 'card_id' en 'transaction', que referencia a la tabla 'credit_card'
+ALTER TABLE transaction
+ADD CONSTRAINT fk_transaction_card_id
+FOREIGN KEY (card_id) REFERENCES credit_card(id);
+
+-- 'business_id' en 'transaction', que referencia a la tabla 'company'
+ALTER TABLE transaction
+ADD CONSTRAINT fk_transaction_business_id
+FOREIGN KEY (business_id) REFERENCES company(company_id);
+
+-- 'user_id' en 'transaction', que referencia a la tabla 'user'
+ALTER TABLE transaction
+ADD CONSTRAINT fk_transaction_user_id
+FOREIGN KEY (user_id) REFERENCES user(id);
 
 ---
 -- NIVEL 1 - EJ 1
